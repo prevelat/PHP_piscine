@@ -1,0 +1,1 @@
+SELECT f.id_genre, g.name AS name_genre, f.id_distrib, d.name AS name_distrib, f.title AS title_film FROM film f LEFT OUTER JOIN genre g ON f.id_genre = g.id_genre LEFT OUTER JOIN distrib d ON f.id_distrib = d.id_distrib WHERE (f.id_genre > 3 AND f.id_genre < 9);
