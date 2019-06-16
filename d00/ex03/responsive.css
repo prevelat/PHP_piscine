@@ -1,0 +1,92 @@
+#bg {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+}
+#bg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    min-width: 50%;
+    min-height: 50%;
+}
+.grid-container {
+    position: fixed;
+    bottom: 1%;
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(18, 4vmin);
+    grid-template-rows: repeat(10, 4vmin);
+    grid-gap: 1.5%;
+    padding: 10px;
+}
+.grid-container > div {
+    text-align: center;
+    padding: 30% 0;
+    font-size: 1vmin;
+    font-weight: bold;
+    position: relative;
+    display: table;
+}
+.grid-container > inv {
+    text-align: center;
+    padding: 1% 0;
+}
+.grid-container > tl {
+    text-align: center;
+    padding: 30% 0;
+    font-size: 1vmin;
+    font-weight: bold;
+    position: relative;
+    display: table;
+}
+at {
+    position: absolute;
+    top: 0;
+    right: 2px;
+    font-size: 1vmin;
+}
+nb {
+    position: absolute;
+    left: 2px;
+    bottom: 0;
+    font-size: 1vmin;
+}
+.nonmetal {
+    background-color: rgba(0, 255, 0, 0.8);
+}
+.al-met {
+    background-color: rgba(222, 169, 36, 0.982);
+}
+.al-ear-met {
+    background-color: rgba(219, 232, 78, 0.8);
+}
+.trans-met {
+    background-color: rgba(239, 182, 151, 0.8);
+}
+.met-oids {
+    background-color: rgba(94, 255, 122, 0.8);
+}
+.p-trans-met {
+    background-color: rgba(94, 255, 201, 0.8);
+}
+.lanth {
+    background-color: rgba(255, 140, 80, 0.8);
+}
+.acti {
+    background-color: rgba(255, 140, 0, 0.8);
+}
+.noble {
+    background-color: rgba(160, 247, 255, 0.8);
+}
+.unk {
+    background-color: rgba(180, 180, 180, 0.8);
+}

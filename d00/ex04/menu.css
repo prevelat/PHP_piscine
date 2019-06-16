@@ -1,0 +1,46 @@
+* { font-family: sans-serif; }
+
+:root {
+    --menu-bg: white;
+    --menu-border-color: rgba(0,0,0,.12);
+}
+
+.menu {
+    padding: 0;
+    position: relative;
+    z-index: 1;
+    border: 1px solid transparent;
+}
+
+.menu:hover {
+    border: 1px solid rgba(0,0,0,0.12);
+}
+
+.menu > li,
+.menu > .content li {
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 10px;
+}
+
+.menu:not(:hover) > .content {
+    display: none;
+}
+
+.menu > li:hover,
+.menu > .content li:hover {
+    background-color: #f6f6f6;
+}
+
+.menu > .content {
+    position: absolute;
+    width: calc(100% - 20px);
+    left: 10px;
+
+    border: 1px solid rgba(0,0,0,0.12);
+    border-top: 1px solid white;
+
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}

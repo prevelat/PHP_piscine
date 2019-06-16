@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Scumm</title>
+</head>
+<body style="background-color: rgb(82, 82, 82);">
+    <link rel="stylesheet" href="doft.css">
+    <div class="box">
+        <img style="margin: 10px" width="500px" height="150px" src="./resources/day_of_the_42.png" alt="Day of the forty two" title="Day of the forty two"/>
+        <span style="position: absolute; right: 5px; bottom: 5px;">Game by <a href="https://github.com/prevelat" target="_blank">fprevela</a> and <a href="https://gitlab.com/raggesilver" target="_blank">pqueiroz</a></span>
+    </div>
+    <div class="box3">
+        <table style="width: 100%; height: 100%; text-align: center;">
+            <tr>
+                <td>Coming soon...</td>
+            </tr>
+        </table>
+    </div>
+    <div class="box2">
+        <img style="margin:10px" width="1180px" height="750px" src="./resources/cluster.jpg" alt="Cluster" title="Cluster"/>
+    </div>
+    <div class="box4" id="inventory">
+    </div>
+
+    <div class="ballon" id="ReplyBaloon">
+        <form onsubmit="return navigate()">
+            <input type="text" size="60" placeholder="Intergalactic URL" id="url-input" autocomplete="off">
+            <button type="submit">Navigate</button>
+            <p id="error-404">Error 404</p>
+        </form>
+    </div>
+
+    <div id="item-found">
+        <button onclick="onCloseItemDialog();">
+            <img src="./resources/close.gif">
+        </button>
+        <img id="item-found-image"/>
+        <p id="item-found-text"></p>
+    </div>
+
+    <div id="amazon">
+        <button onclick="onCloseAmazon();">
+            <img src="./resources/close.gif">
+        </button>
+        <div class="head"><span style="color: #ffc43d">Amazon.com</span> | Your wallet $<span id="wallet">0.0</span></div>
+        <div class="list">
+            <h3>Checkout</h3>
+            <li>
+                <img src="https://imgur.com/sXmwdlh.png">
+                The Ultimate Hitchhiker's Guide to the Galaxy | 01 Ct
+                <hr>
+                <span style="text-align: right; display: block;">Total: $10.00</span>
+            </li>
+        </div>
+        <button id="amazon-buy" onclick="onAmazonBuy();">Buy</button>
+    </div>
+
+    <div id="guide">
+        <button onclick="onCloseGuide();">
+            <img src="./resources/close.gif">
+        </button>
+        <div class="content">
+            <center><h1>Contents</h1></center>
+            <br>
+            <br>
+            <a href="javascript:void(0)">Chapter 1 - The House</a><br>
+            <a href="javascript:void(0)">Chapter 2 - Encyclopedia</a><br>
+            <a href="javascript:void(0)">Chapter 3 - Thursday</a><br>
+            <a href="javascript:void(0)">Chapter 4 - Bar</a><br>
+            <a href="javascript:void(0)">Chapter 5 - End of the world</a><br>
+            <a href="javascript:void(0)">Chapter 6 - Maybe not</a><br>
+            <a href="javascript:void(0)">Chapter 7 - There are aliens</a><br>
+            <a href="javascript:void(0)">Chapter 8 - The book</a><br>
+            <a href="javascript:onAnswer()">Chapter 9 - The answer</a><br>
+            <a href="javascript:void(0)">Chapter 10 - Final</a><br>
+        </div>
+    </div>
+
+    <script>
+    
+    const inventory = document.getElementById('inventory');
+    const itemFoundDialog = document.getElementById('item-found');
+    const itemFoundImg = document.getElementById('item-found-image');
+    const itemFoundText = document.getElementById('item-found-text');
+    const urlInput = document.getElementById('url-input');
+    const error404 = document.getElementById('error-404');
+    const amazon = document.getElementById('amazon');
+    const wallet = document.getElementById('wallet');
+    const guide = document.getElementById('guide');
+
+    let mainClickable = true;
+
+    let objects = [
+        {
+            name: 'Amazon Gift Card',
+            shape: 'rect',
+            available: true,
+            retrieved: false,
+            coords: [[1100, 610], [1230, 710]],
+            src: 'https://i.imgur.com/kxcnFUR.png',
+            onclick: () => {
+
+                window.alert(`Try going to "amazon.com" to use this card.`);
+            },
+            el: null
+        },
+        {
+            name: 'The Ultimate Hitchhiker\'s Guide',
+            available: false,
+            retrieved: false,
+            src: 'https://imgur.com/sXmwdlh.png',
+            el: null,
+            onclick: () => {
+                mainClickable = false;
+                guide.classList.add('show');
+            }
+        }
+    ];
+
+    function onCloseGuide() {
+        guide.classList.remove('show');
+        mainClickable = true;
+    }
+
+    function onCloseItemDialog() {
+        itemFoundDialog.classList.remove('show');
+        mainClickable = true;
+    }
+
+    function onCloseAmazon() {
+        amazon.classList.remove('show');
+        mainClickable = true;
+    }
+    
+    function onAmazonBuy() {
+        if (objects[0].retrieved) {
+            objects[0].retrieved = false;
+            objects[0].el.parentNode.removeChild(objects[0].el);
+            objects[0].el = null;
+            onCloseAmazon();
+            insertObject(objects[1]);
+        } else {
+            window.alert(`You dont have enough money!`);
+        }
+    }
+
+    function navigate() {
+        if (!mainClickable)
+            return (false);
+
+        error404.classList.remove('show');
+        if (urlInput.value == "amazon.com") {
+            // Amazon
+            mainClickable = false;
+            wallet.innerText = (objects[0].retrieved) ?
+                `10.00` : `0.00`;
+            amazon.classList.add('show');
+        } else {
+            error404.classList.add('show');
+        }
+        return (false);
+    }
+
+    function insertObject(obj) {
+        showItemFound(obj);
+        let el = document.createElement('img');
+        el.setAttribute('src', obj.src);
+        el.setAttribute('data-name', obj.name);
+        el.classList.add('item');
+
+        obj.el = el;
+
+        inventory.appendChild(el);
+    }
+
+    function showItemFound(obj) {
+        itemFoundImg.setAttribute('src', obj.src);
+        itemFoundText.innerText = `You've acquired '${obj.name}'`;
+        itemFoundDialog.classList.add('show');
+        mainClickable = false;
+    }
+
+    function onAnswer() {
+        window.alert('Congrats, you win. The answer is 42! Have a great journey and don\'t forget your towel.');
+        window.location = `https://admissions.42.us.org/users/sign_up`;
+    }
+
+    (function() {
+
+        function getObjectByName(name) {
+            for (let obj of objects) {
+                if (obj.name == name)
+                {
+                    return (obj);
+                }
+            };
+            return (null);
+        }
+
+        function objectFound(obj) {
+            // Got object
+            obj.available = false;
+            obj.retrieved = true;
+            console.log(`You found an object: '${obj.name}'`);
+
+            insertObject(obj);
+        }
+
+        window.onclick = function(e) {
+
+            if (!mainClickable)
+                return ;
+            
+            if (e.target.classList.contains('item')) {
+                let obj = getObjectByName(e.target.getAttribute('data-name'));
+                if (obj != null && 'onclick' in obj) {
+                    obj.onclick();
+                }
+                return ;
+            }
+            
+            for (let obj of objects) {
+                if (obj.available &&
+                    e.clientX >= obj.coords[0][0] && e.clientX <= obj.coords[1][0] &&
+                    e.clientY >= obj.coords[0][1] && e.clientY <= obj.coords[1][1])
+                {
+                    objectFound(obj);
+                    return ;
+                }
+            };
+
+            console.log(e);
+        };
+    })();
+    
+    </script>
+
+</body>
+</html>
