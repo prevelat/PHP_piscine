@@ -1,0 +1,19 @@
+
+<- Vertex --------------------------------------------------------------------------------------
+The Vertex class present reading and writing assessorsto a point in space
+according to five characteristics:
+
+        x-axis coordinate
+        y-axis coordinate
+        z-axis coordinate
+        homogeneous coordinate 'w'
+        color (instance of Color class)
+
+An instance can be constructed by giving at least x, y and z.
+'w' and 'color' are optional:
+
+new Vertex( array( 'x' => 1.0, 'y' => 1.0, 'z' => 1.0, 'w' => 1.0, 'color' => $green ) );
+
+color = new Color(array('red' => 255, 'green' => 255, 'blue' => 255)); and w = 1.0 by default
+
+-------------------------------------------------------------------------------------- Vertex ->
